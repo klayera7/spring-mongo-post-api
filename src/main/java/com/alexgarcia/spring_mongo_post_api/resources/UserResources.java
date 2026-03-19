@@ -1,6 +1,7 @@
 package com.alexgarcia.spring_mongo_post_api.resources;
 
 
+import com.alexgarcia.spring_mongo_post_api.domain.Post;
 import com.alexgarcia.spring_mongo_post_api.domain.User;
 import com.alexgarcia.spring_mongo_post_api.dto.UserDTO;
 import com.alexgarcia.spring_mongo_post_api.resources.exception.StandardError;
@@ -55,6 +56,12 @@ public class UserResources {
         obj.setId(id);
         obj = service.update(obj);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+        User obj = service.findById(id);
+        return ResponseEntity.ok().body(obj.getPosts());
     }
 
 }
