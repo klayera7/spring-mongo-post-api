@@ -4,6 +4,7 @@ package com.alexgarcia.spring_mongo_post_api.resources;
 import com.alexgarcia.spring_mongo_post_api.domain.Post;
 import com.alexgarcia.spring_mongo_post_api.domain.User;
 import com.alexgarcia.spring_mongo_post_api.dto.UserDTO;
+import com.alexgarcia.spring_mongo_post_api.resources.util.URL;
 import com.alexgarcia.spring_mongo_post_api.services.PostServices;
 import com.alexgarcia.spring_mongo_post_api.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @RestController
 @RequestMapping("/posts")
 public class PostResources {
@@ -25,6 +27,13 @@ public class PostResources {
     public ResponseEntity<Post> findById(@PathVariable String id) {
         Post obj = service.findById(id);
         return ResponseEntity.ok().body(obj);
+    }
+
+    @GetMapping("/titlesearch")
+    public ResponseEntity<List<Post>> findByTitle(@RequestParam(value = "text", defaultValue = "") String text) {
+        text = URL.decodeParam(text);
+        List<Post> list = service.findByTitle(text);
+        return ResponseEntity.ok().body(list);
     }
 
 }
