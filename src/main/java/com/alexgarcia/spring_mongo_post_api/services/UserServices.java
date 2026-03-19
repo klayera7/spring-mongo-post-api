@@ -1,6 +1,7 @@
 package com.alexgarcia.spring_mongo_post_api.services;
 
 import com.alexgarcia.spring_mongo_post_api.domain.User;
+import com.alexgarcia.spring_mongo_post_api.dto.UserDTO;
 import com.alexgarcia.spring_mongo_post_api.repository.UserRepository;
 import com.alexgarcia.spring_mongo_post_api.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,4 +27,14 @@ public class UserServices {
         }
         return user;
     }
+
+
+    public User insert(User obj) {
+        return repo.insert(obj);
+    }
+
+    public User fromDTO(UserDTO obj) {
+        return new User(obj.getId(), obj.getName(), obj.getEmail());
+    }
+
 }
